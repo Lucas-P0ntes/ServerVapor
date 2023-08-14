@@ -10,5 +10,8 @@ func routes(_ app: Application) throws {
         "Hello, world!"
     }
 
+    app.get{ req -> EventLoopFuture<View> in
+        return req.view.render("hello", ["name": "Leaf"])
+    }
     try app.register(collection: TodoController())
 }
