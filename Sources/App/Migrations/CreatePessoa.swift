@@ -1,11 +1,13 @@
 import Fluent
 
-struct CreateTodo: AsyncMigration {
+struct CreatePessoa: AsyncMigration {
     func prepare(on database: Database) async throws {
         do {
-            try await database.schema("todos")
+            try await database.schema("pessoa")
                 .id()
-                .field("title", .string, .required)
+                .field("name", .string, .required)
+                .field("img_profile", .string, .required)
+
                 .create()
         } catch {
             throw MigrationError.creationFailed(reason: error.localizedDescription)
@@ -14,7 +16,7 @@ struct CreateTodo: AsyncMigration {
 
     func revert(on database: Database) async throws {
         do {
-            try await database.schema("todos").delete()
+            try await database.schema("pessoa").delete()
         } catch {
             throw MigrationError.revertFailed(reason: error.localizedDescription)
         }
