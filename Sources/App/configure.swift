@@ -23,6 +23,8 @@ public func configure(_ app: Application) async throws {
     } else {
         // ...
     }
+    
+    
 
     app.migrations.add(CreatePessoa())
     app.views.use(.leaf)
