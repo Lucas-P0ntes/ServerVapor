@@ -24,7 +24,6 @@ public func configure(_ app: Application) async throws {
         // ...
     }
     
-    app.migrations.add(CreateCollect())
     app.migrations.add(CreatePessoa())
     app.views.use(.leaf)
 
