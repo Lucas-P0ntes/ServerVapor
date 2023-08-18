@@ -10,12 +10,16 @@ final class Pessoa: Model, Content {
     var name: String
     @Field(key: "img_profile")
     var img_profile: String
+    
+    @Field(key: "data")
+     var data: Data
 
     init() { }
 
-    init(id: UUID? = nil, name: String) {
+    init(id: UUID? = nil, name: String, data: Data) {
         self.id = id
         self.name = name
         self.img_profile = img_profile
+        self.data = data
     }
 }

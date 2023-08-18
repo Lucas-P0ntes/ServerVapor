@@ -9,42 +9,17 @@ func routes(_ app: Application) throws {
     /// setup public file middleware (for hosting our uploaded files)
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     
-    app.post("upload") { req -> EventLoopFuture<View> in
-        struct Input: Content {
-            var file: File
-        }
-        let input = try req.content.decode(Input.self)
+    // MARK: /collect
+    let collectFileController = CollectFileController()
+    app.get("collect", use: collectFileController.index)
+    
+    /// Using `body: .collect` we can load the request into memory.
+    /// This is easier than streaming at the expense of using much more system memory.
+    app.on(.POST, "collect",
+           body: .collect(maxSize: 10_000_000),
+           use: collectFileController.upload)
 
-        guard input.file.data.readableBytes > 0 else {
-            throw Abort(.badRequest)
-        }
-
-        let formatter = DateFormatter()
-        formatter.dateFormat = "y-m-d-HH-MM-SS-"
-        let prefix = formatter.string(from: .init())
-        let fileName = prefix + input.file.filename
-        let path = app.directory.publicDirectory + fileName
-        let isImage = ["png", "jpeg", "jpg", "gif"].contains(input.file.extension?.lowercased())
-
-        return req.application.fileio.openFile(path: path,
-                                               mode: .write,
-                                               flags: .allowFileCreation(posixMode: 0x744),
-                                               eventLoop: req.eventLoop)
-            .flatMap { handle in
-                req.application.fileio.write(fileHandle: handle,
-                                             buffer: input.file.data,
-                                             eventLoop: req.eventLoop)
-                    .flatMapThrowing { _ in
-                        try handle.close()
-                    }
-                    .flatMap {
-                        req.leaf.render(template: "result", context: [
-                            "fileUrl": .string(fileName),
-                            "isImage": .bool(isImage),
-                        ])
-                    }
-            }
-    }
+   
     
     
     app.get{ req -> EventLoopFuture<View> in
