@@ -8,11 +8,15 @@
 import Foundation
 
 import Vapor
+import Fluent
 
 struct ImageController: RouteCollection {
     func boot(routes: RoutesBuilder) throws {
         // Define uma rota para buscar uma imagem por nome de arquivo
         routes.get("images", ":filename", use: getImage)
+        routes.post("images", use: addProfilePictureHandler)
+
+        
     }
     
     func getImage(req: Request) throws -> EventLoopFuture<Response> {
@@ -40,4 +44,33 @@ struct ImageController: RouteCollection {
         
         return response.futureResult
     }
+    
+    func addProfilePictureHandler(for req: Request) async throws -> String  {
+        // Decode the image data from the request content
+        let data = try await req.content.decode(ImageUploadData.self)
+        
+        // Get the authenticated user from the request
+        
+        
+        // Find the user in the database based on the authenticated user's ID
+        
+        
+    
+        
+        let imageFolder  = "/Public/images/"
+        let imageName = "lucas.jpg"
+        
+        // It can be a path outside the main program
+        let path = req.application.directory.workingDirectory + imageFolder + imageName
+        
+        try await req.fileio.writeFile(.init(data: data.picture), at: path)
+        
+        
+       // return
+        return " http://localhost:8080/xxx/xxx.jpg"
+    }
+}
+
+struct ImageUploadData: Content {
+    var picture: Data
 }
