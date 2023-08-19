@@ -6,7 +6,7 @@ struct CreatePessoa: AsyncMigration {
             try await database.schema("pessoa")
                 .id()
                 .field("name", .string, .required)
-                .field("img_profile", .string, .required)
+                .field("img_profile", .string)
 
                 .create()
         } catch {
