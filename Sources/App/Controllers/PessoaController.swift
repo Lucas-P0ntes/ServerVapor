@@ -8,7 +8,7 @@ struct PessoaController: RouteCollection {
         pessoa.get(use: getPessoa)
         pessoa.post(use: createWithProfilePicture)
         
-        
+
         pessoa.group(":pessoaID") { pessoa in
             pessoa.delete(use: delete)
         }
@@ -30,8 +30,7 @@ struct PessoaController: RouteCollection {
         
         try await req.fileio.writeFile(.init(data: imageData.picture), at: path)
         
-        var pessoa = try await req.content.decode(Pessoa.self)
-        let id = try pessoa.requireID()
+        var pessoa = try  req.content.decode(Pessoa.self)
 
         pessoa.img_profile = "https://boiling-thicket-76996-175f21afe3b7.herokuapp.com/images/\(imageName)"
         try await pessoa.save(on: req.db)
