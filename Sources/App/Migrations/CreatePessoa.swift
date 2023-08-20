@@ -3,7 +3,7 @@ import Fluent
 struct CreatePessoa: AsyncMigration {
     func prepare(on database: Database) async throws {
         do {
-            try await database.schema("pessoa")
+            try await database.schema("pessoas")
                 .id()
                 .field("name", .string, .required)
                 .field("img_profile", .string)
@@ -16,7 +16,7 @@ struct CreatePessoa: AsyncMigration {
 
     func revert(on database: Database) async throws {
         do {
-            try await database.schema("pessoa").delete()
+            try await database.schema("pessoas").delete()
         } catch {
             throw MigrationError.revertFailed(reason: error.localizedDescription)
         }
