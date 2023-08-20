@@ -48,7 +48,7 @@ final class ProjectModel: Model, Content {
     var imgIcon: String?
     
     
-    init(id: UUID? = nil, name: String, bigIdea: String, essentialQuestion: String, challenge: String, description: String, turma: String, juniorLearner: PessoaModel.IDValue, seniorLearner : PessoaModel.IDValue,link: String, ativo: String, imgScreenshot: String? = nil, imgIcon:String? = nil) {
+    init(id: UUID? = nil, name: String, bigIdea: String, essentialQuestion: String, challenge: String, description: String, turma: String, juniorLearner: UUID, seniorLearner : UUID,link: String, ativo: String, imgScreenshot: String? = nil, imgIcon:String? = nil) {
         self.id = id
         self.name = name
         self.bigIdea = bigIdea
