@@ -22,19 +22,18 @@ struct PessoaController: RouteCollection {
     func createWithProfilePicture(req: Request) async throws -> HTTPStatus {
         
         let imageData = try await req.content.decode(ImageUploadData.self)
-       
+     
         let imageFolder = "/Public/images/"
-        let imageName = "profile.jpg" // Use o ID da pessoa para gerar um nome único
+        let imageName = "\(UUID()).jpg" // Use o ID da pessoa para gerar um nome único
         
         let path = req.application.directory.workingDirectory + imageFolder + imageName
         
         try await req.fileio.writeFile(.init(data: imageData.picture), at: path)
-        var pessoa = try await req.content.decode(Pessoa.self)
         
+        var pessoa = try await req.content.decode(Pessoa.self)
         pessoa.img_profile = "https://boiling-thicket-76996-175f21afe3b7.herokuapp.com/images/\(imageName)"
-         
-
         try await pessoa.save(on: req.db)
+        
         return HTTPStatus.accepted
     }
     
