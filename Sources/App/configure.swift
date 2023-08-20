@@ -25,6 +25,8 @@ public func configure(_ app: Application) async throws {
     }
     
     app.migrations.add(CreatePessoa())
+    app.migrations.add(CreateProject())
+
     app.views.use(.leaf)
 
     // register routes

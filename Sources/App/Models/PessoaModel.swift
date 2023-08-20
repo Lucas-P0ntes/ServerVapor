@@ -8,6 +8,8 @@ final class PessoaModel: Model, Content {
     var id: UUID?
     @Field(key: "name")
     var name: String
+    @Field(key: "cargo")
+    var cargo: String
     @Field(key: "img_profile")
     var img_profile: String?
     
