@@ -3,7 +3,7 @@ import Fluent
 struct CreateProject: AsyncMigration {
     func prepare(on database: Database) async throws {
         do {
-            try await  database.schema("projectModel")
+            try await  database.schema("projects")
            
                         .id()
                         .field("name", .string, .required)

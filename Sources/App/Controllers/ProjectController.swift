@@ -28,6 +28,7 @@ struct ProjectController: RouteCollection {
         try await ProjectModel.query(on: req.db).all()
         
     }
+    
     func create(req: Request) async throws -> ProjectModel{
         let project = try req.content.decode(ProjectModel.self)
         try await project.create(on: req.db)
