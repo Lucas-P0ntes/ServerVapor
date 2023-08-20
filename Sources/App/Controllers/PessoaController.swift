@@ -7,12 +7,12 @@ struct PessoaController: RouteCollection {
         
         pessoa.get(use: index)
         pessoa.post(use: create)
-        
+        pessoa.put(use: update)
+
         
         pessoa.group(":id") { pessoa in
             pessoa.delete(use: delete)
-            pessoa.put(use: update)
-
+            
         }
     }
     
@@ -42,19 +42,19 @@ struct PessoaController: RouteCollection {
     
     func update(req: Request)async throws -> HTTPStatus {
         guard let pessoa = try await PessoaModel.find(req.parameters.get("id"), on: req.db) else {
-               throw Abort(.notFound)
-           }
-           let updatedPessoa = try req.content.decode(PessoaModel.self)
+            throw Abort(.notFound)
+        }
+        let updatedPessoa = try req.content.decode(PessoaModel.self)
         pessoa.name = updatedPessoa.name
-           try await pessoa.save(on: req.db)
+        try await pessoa.save(on: req.db)
         return .accepted
     }
-        
-        func delete(req: Request) async throws -> HTTPStatus {
-            guard let pessoa = try await PessoaModel.find(req.parameters.get("id"), on: req.db) else {
-                throw Abort(.notFound)
-            }
-            try await pessoa.delete(on: req.db)
-            return .noContent
+    
+    func delete(req: Request) async throws -> HTTPStatus {
+        guard let pessoa = try await PessoaModel.find(req.parameters.get("id"), on: req.db) else {
+            throw Abort(.notFound)
         }
+        try await pessoa.delete(on: req.db)
+        return .noContent
     }
+}
