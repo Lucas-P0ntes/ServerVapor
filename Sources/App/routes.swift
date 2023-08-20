@@ -5,7 +5,6 @@ func routes(_ app: Application) throws {
     
     /// config max upload file size
     app.routes.defaultMaxBodySize = "100mb"
-    
     /// setup public file middleware (for hosting our uploaded files)
     app.middleware.use(FileMiddleware(publicDirectory: app.directory.publicDirectory))
     
