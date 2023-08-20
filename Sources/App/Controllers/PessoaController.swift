@@ -11,7 +11,7 @@ struct PessoaController: RouteCollection {
         
         pessoa.group(":id") { pessoa in
             pessoa.delete(use: delete)
-            pessoa.delete(use: update)
+            pessoa.put(use: update)
 
         }
     }
