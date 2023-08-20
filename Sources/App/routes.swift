@@ -13,4 +13,7 @@ func routes(_ app: Application) throws {
     }
     try app.register(collection: PessoaController())
     try app.register(collection: ImageController())
+    try app.register(collection: ProjectController())
+
+    
 }
