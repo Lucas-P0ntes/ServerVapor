@@ -11,7 +11,7 @@ final class Pessoa: Model, Content {
     @Field(key: "img_profile")
     var img_profile: String?
     
-   
+
 
     init() { }
 
