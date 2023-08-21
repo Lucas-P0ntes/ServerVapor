@@ -51,8 +51,8 @@ struct ProjectController: RouteCollection {
        
         let project = try req.content.decode(ProjectModel.self)
         project.id = id
-        project.imgIcon = "https://api-project-academy-9cf71ea0cac6.herokuapp.com/images/\(pathIcon)"
-        project.imgScreenshot = "https://api-project-academy-9cf71ea0cac6.herokuapp.com/images/\(pathPicture)"
+        project.imgIcon = "https://api-project-academy-9cf71ea0cac6.herokuapp.com/images/\(imageNameIcon)"
+        project.imgScreenshot = "https://api-project-academy-9cf71ea0cac6.herokuapp.com/images/\(imageNamePicture)"
 
         try await project.create(on: req.db)
         return project
