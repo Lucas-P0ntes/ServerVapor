@@ -27,7 +27,7 @@ struct CreateProject: AsyncMigration {
 
     func revert(on database: Database) async throws {
         do {
-            try await database.schema("projectModel").delete()
+            try await database.schema("projects").delete()
         } catch {
             throw MigrationError.revertFailed(reason: error.localizedDescription)
         }
