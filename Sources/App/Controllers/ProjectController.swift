@@ -30,7 +30,30 @@ struct ProjectController: RouteCollection {
     }
     
     func create(req: Request) async throws -> ProjectModel{
+        let data = try await req.content.decode(ImageUploadData.self)
+        
+        let id = UUID()
+        let imageFolder = "/Public/images/"
+        
+ 
+        
+        let imageNameIcon = "\(id)Icon.jpg"
+        let imageNamePicture = "\(id)Picture.jpg"
+        // It can be a path outside the main program
+        
+        let pathIcon = req.application.directory.workingDirectory + imageFolder + imageNameIcon
+        let pathPicture = req.application.directory.workingDirectory + imageFolder + imageNamePicture
+
+        
+        try await req.fileio.writeFile(.init(data: data.picture), at: pathPicture)
+        try await req.fileio.writeFile(.init(data: data.imgIcon), at: pathIcon )
+        
+       
         let project = try req.content.decode(ProjectModel.self)
+        project.id = id
+        project.imgIcon = "https://api-project-academy-9cf71ea0cac6.herokuapp.com/images/\(pathIcon)"
+        project.imgScreenshot = "https://api-project-academy-9cf71ea0cac6.herokuapp.com/images/\(pathPicture)"
+
         try await project.create(on: req.db)
         return project
     }

@@ -73,4 +73,5 @@ struct ImageController: RouteCollection {
 
 struct ImageUploadData: Content {
     var picture: Data
+    var imgIcon: Data
 }
