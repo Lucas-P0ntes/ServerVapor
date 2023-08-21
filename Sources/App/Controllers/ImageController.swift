@@ -63,7 +63,7 @@ struct ImageController: RouteCollection {
         // It can be a path outside the main program
         let path = req.application.directory.workingDirectory + imageFolder + imageName
         
-        try await req.fileio.writeFile(.init(data: data.picture), at: path)
+        try await req.fileio.writeFile(.init(data: data.imgScreenshot), at: path)
         
         
        // return
@@ -72,6 +72,6 @@ struct ImageController: RouteCollection {
 }
 
 struct ImageUploadData: Content {
-    var picture: Data
+    var imgScreenshot: Data
     var imgIcon: Data
 }

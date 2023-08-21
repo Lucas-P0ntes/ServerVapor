@@ -45,7 +45,7 @@ struct ProjectController: RouteCollection {
         let pathPicture = req.application.directory.workingDirectory + imageFolder + imageNamePicture
 
         
-        try await req.fileio.writeFile(.init(data: data.picture), at: pathPicture)
+        try await req.fileio.writeFile(.init(data: data.imgScreenshot), at: pathPicture)
         try await req.fileio.writeFile(.init(data: data.imgIcon), at: pathIcon )
         
        
