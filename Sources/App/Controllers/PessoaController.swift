@@ -30,7 +30,7 @@ struct PessoaController: RouteCollection {
         
         let path = req.application.directory.workingDirectory + imageFolder + imageName
         
-        try await req.fileio.writeFile(.init(data: imageData.picture), at: path)
+        try await req.fileio.writeFile(.init(data: imageData.imgScreenshot), at: path)
         
         var pessoa = try await req.content.decode(PessoaModel.self)
         pessoa.id = id
