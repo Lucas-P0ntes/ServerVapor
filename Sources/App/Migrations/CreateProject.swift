@@ -12,8 +12,6 @@ struct CreateProject: AsyncMigration {
                         .field("challenge", .string, .required)
                         .field("description", .string, .required)
                         .field("turma", .string, .required)
-                        .field("pessoas_id_junior", .uuid, .references("persons", "id"))
-                        .field("pessoas_id_senior", .uuid, .references("persons", "id"))
                         .field("link", .string, .required)
                         .field("ativo", .string, .required)
                         .field("img_screenshot", .string, .required)

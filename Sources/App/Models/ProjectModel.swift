@@ -29,11 +29,6 @@ final class ProjectModel: Model, Content {
     @Field(key: "turma")
     var turma: String
     
-    @Parent(key: "pessoas_id_junior")
-    var juniorLearner: PessoaModel
-    
-    @Parent(key: "pessoas_id_senior")
-    var seniorLearner: PessoaModel
     
     @Field(key: "link")
     var link: String
@@ -48,7 +43,7 @@ final class ProjectModel: Model, Content {
     var imgIcon: String?
     
     
-    init(id: UUID? = nil, name: String, bigIdea: String, essentialQuestion: String, challenge: String, description: String, turma: String, juniorLearner: UUID, seniorLearner: UUID,link: String, ativo: String, imgScreenshot: String? = nil, imgIcon:String? = nil) {
+    init(id: UUID? = nil, name: String, bigIdea: String, essentialQuestion: String, challenge: String, description: String, turma: String, link: String, ativo: String, imgScreenshot: String? = nil, imgIcon:String? = nil) {
         self.id = id
         self.name = name
         self.bigIdea = bigIdea
@@ -56,8 +51,7 @@ final class ProjectModel: Model, Content {
         self.challenge = challenge
         self.description = description
         self.turma = turma
-        self.$juniorLearner.id = juniorLearner
-        self.$seniorLearner.id = seniorLearner
+
         self.link = link
         self.ativo = ativo
         self.imgScreenshot = imgScreenshot
