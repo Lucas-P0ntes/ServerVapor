@@ -25,7 +25,22 @@ struct ProjectController: RouteCollection {
     
     func index(req: Request) async throws -> [ProjectModel] {
         
-        try await ProjectModel.query(on: req.db).all()
+        let projects = try await ProjectModel.query(on: req.db).all()
+           
+           // Decodificar URLs codificadas nas propriedades de imagem de cada projeto
+           for var project in projects {
+               if let decodedURL = project.link.removingPercentEncoding {
+                   project.link = decodedURL
+               }
+               if let decodedURL = project.imgIcon?.removingPercentEncoding {
+                   project.imgIcon = decodedURL
+               }
+               if let decodedURL = project.imgScreenshot?.removingPercentEncoding {
+                   project.imgScreenshot = decodedURL
+               }
+               
+           }
+        return projects
         
     }
     
