@@ -108,9 +108,12 @@ struct ProjectController: RouteCollection {
     }
     
     func delete(req: Request) async throws -> HTTPStatus {
-        
-        return .noContent
-    }
+        guard let project = try await ProjectModel.find(req.parameters.get("id"), on: req.db) else {
+              throw Abort(.notFound)
+          }
+          try await project.delete(on: req.db)
+          return .ok
+      }
 }
 
 
